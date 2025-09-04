@@ -1,0 +1,45 @@
+#%RAML 1.0 Trait
+
+responses:
+  400:
+    description: "Bad Request"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-400-bad-request.json
+  404:
+    description: "Not Found"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-404-resource-not-found.json
+  405:
+    description: "Method Not Allowed"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-405-method-not-allowed.json
+  406:
+    description: "Not Acceptable"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-406-not-acceptable.json
+  415:
+    description: "Unsupported Media Type"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-415-unsupported-media-type.json
+  500:
+    description: "Internal Error"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-500-internal-error.json
+  501:
+    description: "Not Implemented"
+    body:
+      application/json:
+        type: response.ErrorMessage
+        example: !include ../examples/api-501-not-implemented.json

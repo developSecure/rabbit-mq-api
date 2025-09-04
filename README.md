@@ -1,0 +1,1 @@
+# mule-starter-project-template

@@ -1,0 +1,59 @@
+#%RAML 1.0 Library
+
+types:
+    ErrorMessage:
+      type: object
+      displayName: Error Message
+      description: Error Message
+      properties:
+        error:
+          type: object
+          properties:
+            errorCode:
+                type: string
+                required: false
+                displayName: Error Code
+                description: The error code
+                example: "500"
+            errorDateTime:
+                type: datetime
+                required: false
+                displayName: Error Date Time
+                description: The date/time of the error
+                example: 2024-07-03T20:41:12.849Z
+            errorMessage:
+                type: string
+                required: false
+                displayName: Error Message
+                description: The error message
+                example: "DB CONNECTIVITY ERROR" 
+            errorDescription:
+                type: string
+                required: false
+                displayName: Error Description
+                description: The error description
+                example: |
+                  "Failed to connect to DB"
+                  
+    SuccessMessage:
+      type: object
+      displayName: Success Message
+      description: Success Message
+      properties:
+        response:
+          type: object
+          displayName: Response
+          description: Response
+          properties:
+            datetime: 
+              type: datetime
+              required: false
+              displayName: Success Date Time
+              description: The datetime of the response
+              example: "2024-11-01T00:00:40.399051+02:00"
+            message: 
+              type: string
+              required: false
+              displayName: Success Message
+              description: The response message
+              example: "Request is sent to Salesforce to be processed"

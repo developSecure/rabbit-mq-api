@@ -1,0 +1,13 @@
+# Configuration file
+
+api:
+  version: "v1"
+  
+autodiscovery:
+  api:
+    id: ""
+    
+http:
+  listener:
+    path: "/mule-api/api/${api.version}"
+    timeout: "120000" #2 min

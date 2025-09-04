@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: mule-starter-project-template-api
+version: v1
+
+uses:
+  response: datatypes/response.raml
+
+types:
+  hello: !include datatypes/hello-message.raml
+  
+traits:
+  common-error-responses: !include traits/common-error-responses.raml
+
+/hello:
+  get:
+    displayName: Hello Message
+    description: The hello message
+    queryParameters:
+      name?:
+        type: string
+        displayName: Name
+        description: The name
+        example: "World"
+    responses:
+      200:
+        body:
+          application/json:
+            type: hello
+            example: !include examples/hello-response.json
+    is: [common-error-responses]

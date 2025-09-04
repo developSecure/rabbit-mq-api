@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd">
+	<apikit:config outboundHeadersMapName="outboundHeadersMapName" httpStatusVarName="httpStatus" doc:name="Router" doc:id="574516f2-f584-4a98-bd59-89be2e1a4708" name="mule-starter-project-template-api-config" api="mule-starter-project-template-api.raml" />
+	<global-property doc:name="Global Property" doc:id="c7767647-8f22-4c8a-8067-07e3c4d9834a" name="env" value="local" />
+	<configuration-properties doc:name="Configuration properties" doc:id="e57edd80-1bf6-43f8-a185-b58af0d1c30a" file="config/${env}-properties.yaml" />
+</mule>
