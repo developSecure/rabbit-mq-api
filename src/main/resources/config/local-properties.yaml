@@ -9,5 +9,5 @@ autodiscovery:
     
 http:
   listener:
-    path: "/mule-api/api/${api.version}"
+    path: "/rabbitmq-sa/api/${api.version}"
     timeout: "120000" #2 min
