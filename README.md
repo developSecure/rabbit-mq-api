@@ -1,1 +1,1 @@
-# mule-starter-project-template
+# rabbit-mq-system-api
