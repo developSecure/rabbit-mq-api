@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+<mule xmlns:amqp="http://www.mulesoft.org/schema/mule/amqp" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/amqp http://www.mulesoft.org/schema/mule/amqp/current/mule-amqp.xsd">
 	<sub-flow name="helloSubFlow" doc:id="fd642bef-8978-4610-96cb-ca4d9201260d" >
-		<set-variable value='#[attributes.queryParams.name default "world"]' doc:name="name" doc:id="811460a2-2aee-466c-82ab-b25701928b78" variableName="name"/>
+		<set-variable value='#[attributes.queryParams.name]' doc:name="name" doc:id="811460a2-2aee-466c-82ab-b25701928b78" variableName="name"/>
 		<ee:transform doc:name="response" doc:id="5fe84d2b-7886-45d4-9739-859332a04585" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -16,5 +17,20 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+	</sub-flow>
+	<sub-flow name="publishlSubFlow" doc:id="b27edc12-dc12-4b19-878a-fc125c9970f8" >
+		<amqp:publish doc:name="Publish" doc:id="681ed3e1-d56f-4037-8baa-7d91eb50c9e4" exchangeName='#["mulesoft"]' skipExchangeValidation="YES" config-ref="AMQP_Config" requestBrokerConfirms="true"/>
+	</sub-flow>
+	<sub-flow name="consumeSubFlow" doc:id="4e26980e-9c5c-41ed-89a6-822cb677c1b4" >
+		<amqp:consume doc:name="Consume" doc:id="e1a09a13-7b99-4920-9641-76bc2c06f39d" queueName="mule-queue" config-ref="AMQP_Config"/>
+		<ee:transform doc:name="response" doc:id="0d05da8a-498d-4c5d-897f-38a9c6e8787b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="ef26073c-80a4-41c0-af9e-2b6a2518c87e" message='#["Consumed: ": payload]' />
 	</sub-flow>
 </mule>

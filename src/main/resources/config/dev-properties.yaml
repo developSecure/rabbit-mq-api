@@ -11,3 +11,9 @@ http:
   listener:
     path: "/rabbitmq-sa/api/${api.version}"
     timeout: "120000" #2 min
+    
+rabbitmq:
+  host: "8081"
+  port: "5672"
+  user: "guest"
+  password: "guest"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
     <import doc:name="Import" doc:id="33cd167f-f8b9-4bf8-bcec-1db60c8fedb0" file="mule-common-error-handler.xml" />
-	<flow name="rabbit-mq-system-api-main">
+    <flow name="rabbit-mq-system-api-main">
         <http:listener config-ref="HTTP_Listener_config" path="${http.listener.path}/*">
             <http:response statusCode="#[vars.httpStatus default 200]">
                 <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
@@ -12,7 +12,6 @@
             </http:error-response>
         </http:listener>
         <apikit:router config-ref="rabbit-mq-system-api-config" />
-		<error-handler ref="global-error-handler" />
     </flow>
     <flow name="rabbit-mq-system-api-console">
         <http:listener config-ref="HTTP_Listener_config" path="/console/*">
@@ -25,18 +24,15 @@
             </http:error-response>
         </http:listener>
         <apikit:console config-ref="rabbit-mq-system-api-config" />
-		<error-handler ref="global-error-handler" />
+        <error-handler ref="global-error-handler" />
     </flow>
     <flow name="get:\hello:rabbit-mq-system-api-config">
-        <ee:transform doc:name="Transform Message">
-            <ee:message>
-                <ee:set-payload><![CDATA[%dw 2.0
-output application/json
----
-{
-  message: "Hello, World!"
-} as Object {encoding: "UTF-8", mediaType: "application/json"}]]></ee:set-payload>
-            </ee:message>
-        </ee:transform>
+        <flow-ref doc:name="helloSubFlow" doc:id="e5d3b770-5520-4c07-a2d7-22748beaca8c" name="helloSubFlow" />
+    </flow>
+    <flow name="post:\publish:rabbit-mq-system-api-config">
+        <flow-ref doc:name="publishlSubFlow" doc:id="ce093dfc-c03c-4b69-8e6d-8a70181a6222" name="publishlSubFlow" />
+    </flow>
+    <flow name="get:\consume:rabbit-mq-system-api-config">
+        <flow-ref doc:name="consumeSubFlow" doc:id="eb85f9f1-41a9-4295-bcce-52c1a2776b5c" name="consumeSubFlow" />
     </flow>
 </mule>
